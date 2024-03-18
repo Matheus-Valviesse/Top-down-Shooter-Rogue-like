@@ -1,5 +1,22 @@
 extends CharacterBody2D
 
+@onready var arm = $Arm
+@onready var hand = $Arm/Hand
+
+var weapon_index = 0
+
+const weapon_paths = [
+	'res://weapons/pistols/pistol_01/pistol_01.tscn',
+]
+
+# Lista de armas carregadas
+var weapons = []
+
+# Arma atualmente equipada
+var equipped_weapon = null
+var hide_weapon = null
+
+
 var atributos_base = {
 	"atk_base": 10,
 	"speed_base":80,
@@ -41,6 +58,20 @@ var modificadores = {
 	}
 }
 
+
+# Carrega as armas disponíveis
+func load_weapons():
+	weapons.append( preload(weapon_paths[0]))
+	var weapon_instance = await weapons[0].instantiate()
+	weapon_instance.global_position = self.global_position
+	get_parent().add_child(weapon_instance)
+	equipped_weapon = weapon_instance
+	
+
+func get_input():
+	var input_direction = Input.get_vector("left", "right", "up", "down")
+	velocity = input_direction * stat_total('speed')
+
 # Função para selecionar um status com todos os bonus
 func stat_total(stat):
 	var total = atributos_base[stat+"_base"]
@@ -64,20 +95,26 @@ func aplicar_modificador(modificador):
 				iventory.push_back(modificadores['items'][s]['item'])
 				modificadores['items'][s]['item'] = modificador
 
-# função para remover
-func remove_modifier(type,name):
-	var target
-	for data in range(modificadores[type].size()):
-		if modificadores[type][data].name == name:
-			target = data
-		
-	if target != null:
-		modificadores[type].remove_at(target)
+# função para remover@onready var hand = $Arm/Hand
 
-func get_input():
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = input_direction * stat_total("speed")
-	
+	if equipped_weapon !=  null:
+		hide_weapon.global_position = self.global_position
+		equipped_weapon.global_position = hand.global_position
+		equipped_weapon.look_at(get_global_mouse_position())
+
 func _physics_process(delta):
+	# Processa as entradas do jogador e move o personagem
 	get_input()
 	move_and_slide()
+		
+	# Mantém o braço sempre apontando para a posição do cursor
+	arm.look_at(get_global_mouse_position())
+	
+	# Se houver uma arma equipada, mantém ela na mão e aponta na direção do cursor
+	if equipped_weapon != null:
+		print(equipped_weapon)
+		if hide_weapon != null: hide_weapon.global_position = self.global_position
+		equipped_weapon.global_position = hand.global_position
+		equipped_weapon.look_at(get_global_mouse_position())
+	else:
+		load_weapons()

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://3bujl6i3mok8"]
+
+[ext_resource type="Script" path="res://weapons/bullets/bullet_base/Bullet_area.gd" id="1_8iodv"]
+
+[node name="Bullet_area" type="Area2D"]
+script = ExtResource("1_8iodv")
+
+[node name="Bullet_Sprite" type="Sprite2D" parent="."]
+
+[node name="Bullet_Collision" type="CollisionShape2D" parent="."]

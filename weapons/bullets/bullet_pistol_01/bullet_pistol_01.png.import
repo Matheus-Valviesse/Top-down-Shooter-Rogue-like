@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btopg5g7s0n7f"
-path="res://.godot/imported/plague_doctor.png-5a45df2915982e206bbaa9f5ae504345.ctex"
+uid="uid://dwds4hy65nc5f"
+path="res://.godot/imported/bullet_pistol_01.png-4797a112780e74e0d7d10cd9faf1b016.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/assets/plague_doctor.png"
-dest_files=["res://.godot/imported/plague_doctor.png-5a45df2915982e206bbaa9f5ae504345.ctex"]
+source_file="res://weapons/bullets/bullet_pistol_01/bullet_pistol_01.png"
+dest_files=["res://.godot/imported/bullet_pistol_01.png-4797a112780e74e0d7d10cd9faf1b016.ctex"]
 
 [params]
 

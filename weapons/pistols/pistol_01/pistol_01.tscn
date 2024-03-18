@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2jd2oaxwyvdi"]
+
+[ext_resource type="PackedScene" uid="uid://3xxvceg6y4nu" path="res://weapons/base class/base_01/weapon_base.tscn" id="1_bqj6e"]
+[ext_resource type="Script" path="res://weapons/pistols/pistol_01/Pistol_01.gd" id="2_utn38"]
+[ext_resource type="Texture2D" uid="uid://b6jg64onb7gdj" path="res://weapons/weapons.png" id="3_veax1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jocy"]
+size = Vector2(18, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4d8j0"]
+size = Vector2(2, 3)
+
+[node name="Pistol_01" instance=ExtResource("1_bqj6e")]
+script = ExtResource("2_utn38")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("3_veax1")
+region_enabled = true
+region_rect = Rect2(96, 112, 16, 16)
+
+[node name="weaponColision" parent="." index="1"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_8jocy")
+
+[node name="BulletSpawn" parent="." index="2"]
+position = Vector2(9, 0.5)
+shape = SubResource("RectangleShape2D_4d8j0")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://3xxvceg6y4nu"]
+
+[ext_resource type="Script" path="res://weapons/base class/base_01/Weapon_Base.gd" id="1_2r0wu"]
+
+[node name="Weapon_Base" type="Area2D"]
+script = ExtResource("1_2r0wu")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="weaponColision" type="CollisionShape2D" parent="."]
+
+[node name="BulletSpawn" type="CollisionShape2D" parent="."]
+
+[node name="Animation" type="AnimationPlayer" parent="."]
