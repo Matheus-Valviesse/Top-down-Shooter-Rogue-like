@@ -19,7 +19,8 @@ var velocity = Vector2.RIGHT
 func set_time(t):
 	time += t
 	await get_tree().create_timer(time * 0.6).timeout
-	await get_tree().create_timer(time * 0.1).timeout
+	await get_tree().create_timer(time * 0.4).timeout
+	print('aqui')
 	queue_free()
 	# if set_trail == true :
 		# line= preload("res://trail/trail.tscn")
@@ -34,7 +35,7 @@ func set_time(t):
 
 	
 func _physics_process(delta):
-	position +=  velocity * delta 
+	position +=  velocity * delta
 	
 func _on_VisibilityNotifier2D_screen_exited():
 	if trail != null:

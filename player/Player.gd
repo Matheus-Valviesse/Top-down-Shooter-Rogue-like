@@ -6,18 +6,18 @@ extends CharacterBody2D
 var weapon_index = 0
 
 const weapon_paths = [
-	'res://weapons/pistols/pistol_01/pistol_01.tscn',
+	'res://weapons/shootgun/shootgun_spar/shootgun_spar.tscn',
 ]
 
 # Lista de armas carregadas
-var weapons = []
+var weapons :Array = []
 
 # Arma atualmente equipada
 var equipped_weapon = null
 var hide_weapon = null
 
 
-var atributos_base = {
+var atributos_base :Dictionary = {
 	"atk_base": 10,
 	"speed_base":80,
 	"critical_base":0.15,
@@ -29,12 +29,12 @@ var atributos_base = {
 	"bullet_speed_base":0,
 }
 
-var obj = {}
+var obj :Dictionary= {}
 
-var iventory = []
+var iventory :Array= []
 
 # Modificadores atuais aplicados
-var modificadores = {
+var modificadores:Dictionary = {
 	"items": {
 		'slot_1':{
 			'slot':'capuz',
@@ -126,7 +126,6 @@ func _physics_process(delta):
 	
 	# Se houver uma arma equipada, mantém ela na mão e aponta na direção do cursor
 	if equipped_weapon != null:
-		print(equipped_weapon)
 		if hide_weapon != null: hide_weapon.global_position = self.global_position
 		equipped_weapon.global_position = hand.global_position
 		equipped_weapon.look_at(get_global_mouse_position())

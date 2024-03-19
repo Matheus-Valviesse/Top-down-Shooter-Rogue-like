@@ -12,7 +12,7 @@ config_version=5
 
 config/name="top-Down Rogue Like"
 run/main_scene="res://word/area_test.tscn"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
