@@ -21,7 +21,12 @@ var atributos_base = {
 	"atk_base": 10,
 	"speed_base":80,
 	"critical_base":0.15,
-	"critical_damage_base":0.60
+	"critical_damage_base":0.60,
+	"bullet_size_base":0,
+	"bullet_amount_base":0,
+	"bullet_spread_base":0,
+	"bullet_time_base":0,
+	"bullet_speed_base":0,
 }
 
 var obj = {}
@@ -71,7 +76,16 @@ func load_weapons():
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = input_direction * stat_total('speed')
-
+	
+	if Input.is_action_just_pressed("shoot") and equipped_weapon != null:
+		equipped_weapon.weapon_shoot(
+			stat_total('atk'),
+			stat_total('bullet_size'),
+			stat_total('bullet_amount'),
+			stat_total('bullet_spread'),
+			stat_total('bullet_time'),
+			stat_total('bullet_speed'),
+		)
 # Função para selecionar um status com todos os bonus
 func stat_total(stat):
 	var total = atributos_base[stat+"_base"]

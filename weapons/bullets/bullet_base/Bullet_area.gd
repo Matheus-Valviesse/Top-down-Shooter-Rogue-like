@@ -2,7 +2,7 @@ extends  Area2D
 class_name Bullet
 
 
-@onready var time = 1000.85
+@onready var time = 2
 
 var damage = 0
 var bullet = self
@@ -16,11 +16,11 @@ var set_trail =  true
 
 var velocity = Vector2.RIGHT
 
-var thunder_bolt = true
-var thunder_bolt_chance = 0.45
-	
-# func set_time(t):
-	
+func set_time(t):
+	time += t
+	await get_tree().create_timer(time * 0.6).timeout
+	await get_tree().create_timer(time * 0.1).timeout
+	queue_free()
 	# if set_trail == true :
 		# line= preload("res://trail/trail.tscn")
 		#trail = line.instantiate()
@@ -28,11 +28,10 @@ var thunder_bolt_chance = 0.45
 		#get_parent().add_child(trail)
 		#trail.width += trail.width * add_scale
 		
-	#time = t
-	#await get_tree().create_timer(time * 0.6).timeout
+	
+	
 	#if trail != null: trail.MAX_LENGTH = 0
-	#await get_tree().create_timer(time * 0.1).timeout
-	#queue_free()
+
 	
 func _physics_process(delta):
 	position +=  velocity * delta 

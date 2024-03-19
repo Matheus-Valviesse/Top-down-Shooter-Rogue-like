@@ -72,9 +72,9 @@ func weapon_shoot(damage,size,amount,spread,time,speed):
 			spawned_bullet.velocity = Vector2(bullet_speed + (bullet_speed * speed) ,0).rotated(global_rotation + angle / (bullet_amount + amount))
 			spawned_bullet.damage = damage
 			spawned_bullet.bullet_speed = (bullet_speed + (bullet_speed * speed))
-		animation.play("shoot_1")
+		#animation.play("shoot_1")
 		weapon_ammo_amount(1)
-	
+		weapon_status = 'idle'
 func set_ammo():
 	
 	if weapon_max_ammo <= 0 :
