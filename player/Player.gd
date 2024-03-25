@@ -1,82 +1,93 @@
 extends CharacterBody2D
 
+# Variáveis para referenciar o braço e a mão do personagem
 @onready var arm = $Arm
 @onready var hand = $Arm/Hand
 
+# Índice da arma atualmente equipada
 var weapon_index = 0
 
+# Caminhos das armas disponíveis
 const weapon_paths = [
-	'res://weapons/shootgun/shootgun_spar/shootgun_spar.tscn',
+	'res://weapons/pistols/pistol_01/pistol_01.tscn',
 ]
 
 # Lista de armas carregadas
-var weapons :Array = []
+var weapons = []
 
-# Arma atualmente equipada
+# Arma atualmente equipada e arma escondida (para trocas)
 var equipped_weapon = null
 var hide_weapon = null
 
-
-var atributos_base :Dictionary = {
-	"atk_base": 10,
-	"speed_base":80,
-	"critical_base":0.15,
-	"critical_damage_base":0.60,
-	"bullet_size_base":0,
-	"bullet_amount_base":0,
-	"bullet_spread_base":0,
-	"bullet_time_base":0,
-	"bullet_speed_base":0,
+# Variáveis de atributos base
+var atributos_base = {
+	"atk_base": func(): return 10,
+	"speed_base": func(): return 80,
+	"critical_base": func(): return 0.15,
+	"critical_damage_base": func(): return 0.60,
+	"bullet_size_base": func(): return equipped_weapon.bullet_size,
+	"bullet_amount_base": func(): return equipped_weapon.bullet_amount,
+	"bullet_spread_base": func(): return equipped_weapon.bullet_spread,
+	"bullet_time_base": func(): return equipped_weapon.bullet_time,
+	"bullet_speed_base": func(): return equipped_weapon.bullet_speed,
 }
 
-var obj :Dictionary= {}
-
-var iventory :Array= []
+# Objeto e inventário (ainda não utilizados)
+var obj = {}
+var inventory = []
 
 # Modificadores atuais aplicados
-var modificadores:Dictionary = {
+var modifiers = {
 	"items": {
-		'slot_1':{
-			'slot':'capuz',
-			'item':{}
+		'slot_1': {
+			'slot': 'capuz',
+			'item': {
+				'name': 'Capuz do caçador de feras',
+				'slot': 'capuz',
+				'stats': {
+					'atk_p': 0.10,
+					'bullet_amount_f': 3,
+					'bullet_size_p': 0.3,
+				}
+			}
 		},
-		'slot_2':{
-			'slot':'torso',
-			'item':{}
+		'slot_2': {
+			'slot': 'torso',
+			'item': {}
 		},
-		'slot_3':{
-			'slot':'calça',
-			'item':{}
+		'slot_3': {
+			'slot': 'calça',
+			'item': {}
 		},
-		'slot_4':{
-			'slot':'luva',
-			'item':{}
+		'slot_4': {
+			'slot': 'luva',
+			'item': {}
 		},
-		'slot_5':{
-			'slot':'bota',
-			'item':{}
+		'slot_5': {
+			'slot': 'bota',
+			'item': {}
 		},
-		'slot_6':{
-			'slot':'mascara',
-			'item':{}
+		'slot_6': {
+			'slot': 'mascara',
+			'item': {}
 		},
 	}
 }
 
-
 # Carrega as armas disponíveis
 func load_weapons():
-	weapons.append( preload(weapon_paths[0]))
+	weapons.append(preload(weapon_paths[0]))
 	var weapon_instance = await weapons[0].instantiate()
 	weapon_instance.global_position = self.global_position
 	get_parent().add_child(weapon_instance)
 	equipped_weapon = weapon_instance
-	
 
+# Obtém as entradas do jogador
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = input_direction * stat_total('speed')
 	
+	# Dispara a arma ao pressionar o botão "shoot"
 	if Input.is_action_just_pressed("shoot") and equipped_weapon != null:
 		equipped_weapon.weapon_shoot(
 			stat_total('atk'),
@@ -86,35 +97,28 @@ func get_input():
 			stat_total('bullet_time'),
 			stat_total('bullet_speed'),
 		)
-# Função para selecionar um status com todos os bonus
+
+# Calcula o total de um atributo levando em conta os modificadores
 func stat_total(stat):
-	var total = atributos_base[stat+"_base"]
+	var total = atributos_base[stat+"_base"].call()
 	var total_p = 0
-	for modificador in modificadores["items"]:
-		if modificadores["items"][modificador]['item'].has('stats'):
-			if modificadores["items"][modificador]['item']['stats'].has(stat+'_f'):
-				total += modificadores["items"][modificador]['item']["stats"][stat+'_f']
-			if modificadores["items"][modificador]['item']['stats'].has(stat+'_p'):
-				total_p +=  modificadores["items"][modificador]['item']["stats"][stat+'_p']
+	for modifier in modifiers["items"]:
+		if modifiers["items"][modifier]['item'].has('stats'):
+			if modifiers["items"][modifier]['item']['stats'].has(stat+'_f'):
+				total += modifiers["items"][modifier]['item']["stats"][stat+'_f']
+			if modifiers["items"][modifier]['item']['stats'].has(stat+'_p'):
+				total_p +=  modifiers["items"][modifier]['item']["stats"][stat+'_p']
 	return total + (total * total_p)
 
-# Função para aplicar modificadores
+# Aplica um modificador
 func aplicar_modificador(modificador):
-	for s in modificadores['items']:
-		if modificadores['items'][s]['slot'] == modificador.slot:
-			if modificadores['items'][s]['item'].keys().size() == 0:
-				
-				modificadores['items'][s]['item'] = modificador
+	for s in modifiers['items']:
+		if modifiers['items'][s]['slot'] == modificador.slot:
+			if modifiers['items'][s]['item'].keys().size() == 0:
+				modifiers['items'][s]['item'] = modificador
 			else:
-				iventory.push_back(modificadores['items'][s]['item'])
-				modificadores['items'][s]['item'] = modificador
-
-# função para remover@onready var hand = $Arm/Hand
-
-	if equipped_weapon !=  null:
-		hide_weapon.global_position = self.global_position
-		equipped_weapon.global_position = hand.global_position
-		equipped_weapon.look_at(get_global_mouse_position())
+				inventory.push_back(modifiers['items'][s]['item'])
+				modifiers['items'][s]['item'] = modificador
 
 func _physics_process(delta):
 	# Processa as entradas do jogador e move o personagem
@@ -124,7 +128,7 @@ func _physics_process(delta):
 	# Mantém o braço sempre apontando para a posição do cursor
 	arm.look_at(get_global_mouse_position())
 	
-	# Se houver uma arma equipada, mantém ela na mão e aponta na direção do cursor
+	# Mantém a arma na mão e aponta na direção do cursor se houver uma arma equipada
 	if equipped_weapon != null:
 		if hide_weapon != null: hide_weapon.global_position = self.global_position
 		equipped_weapon.global_position = hand.global_position

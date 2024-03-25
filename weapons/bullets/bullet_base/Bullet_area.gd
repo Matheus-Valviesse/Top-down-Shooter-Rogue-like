@@ -2,7 +2,7 @@ extends  Area2D
 class_name Bullet
 
 
-@onready var time = 2
+@onready var time = 0
 
 var damage = 0
 var bullet = self
@@ -20,7 +20,7 @@ func set_time(t):
 	time += t
 	await get_tree().create_timer(time * 0.6).timeout
 	await get_tree().create_timer(time * 0.4).timeout
-	print('aqui')
+
 	queue_free()
 	# if set_trail == true :
 		# line= preload("res://trail/trail.tscn")
