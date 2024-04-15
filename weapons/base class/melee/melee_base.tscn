@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce0hrx5b0nmfo"]
+
+[ext_resource type="PackedScene" uid="uid://3xxvceg6y4nu" path="res://weapons/base class/base_01/weapon_base.tscn" id="1_lqkur"]
+[ext_resource type="Script" path="res://weapons/base class/melee/Melee_Base.gd" id="2_11tbl"]
+
+[node name="Weapon_Base" instance=ExtResource("1_lqkur")]
+script = ExtResource("2_11tbl")
+
+[connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]

@@ -29,12 +29,3 @@ shape = SubResource("RectangleShape2D_ivx6y")
 [node name="Hand" type="CollisionShape2D" parent="Arm"]
 position = Vector2(6, 0)
 shape = SubResource("RectangleShape2D_n8hyj")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.05
-
-[node name="dash_cd" type="Timer" parent="."]
-wait_time = 0.45
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="dash_cd" to="." method="_on_dash_cd_timeout"]

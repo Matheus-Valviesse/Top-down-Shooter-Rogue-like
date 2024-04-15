@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btopg5g7s0n7f"
-path="res://.godot/imported/plague_doctor.png-9536095884a97d6f67563eedeece9bca.ctex"
+uid="uid://d14gdvxrsbfvb"
+path="res://.godot/imported/machete_slash4.png-e7fdad3e9b9846edce96dcd6c6cacd93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/assets/plague_doctor.png"
-dest_files=["res://.godot/imported/plague_doctor.png-9536095884a97d6f67563eedeece9bca.ctex"]
+source_file="res://weapons/machete/machete_slash4.png"
+dest_files=["res://.godot/imported/machete_slash4.png-e7fdad3e9b9846edce96dcd6c6cacd93.ctex"]
 
 [params]
 

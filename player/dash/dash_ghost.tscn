@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://sjl2f7b3f8as"]
+
+[ext_resource type="Script" path="res://player/dash/Dash_ghost.gd" id="1_630kg"]
+[ext_resource type="Texture2D" uid="uid://btopg5g7s0n7f" path="res://player/assets/plague_doctor.png" id="1_ob4n4"]
+
+[node name="Dash_ghost" type="Sprite2D"]
+texture = ExtResource("1_ob4n4")
+script = ExtResource("1_630kg")
